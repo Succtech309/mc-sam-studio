@@ -1,223 +1,1547 @@
-zz<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>MC Samm Studios</title>
-  <link rel="stylesheet" href="samm.css">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Montserrat:wght@700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&family=Montserrat:wght@700&display=swap" rel="stylesheet" />
+
+  <style>
+  /* ============================================================
+     MC SAMM STUDIOS — COMPLETE RESPONSIVE STYLESHEET
+     Mobile-first | CSS Variables | Flexbox + Grid | clamp()
+  ============================================================ */
+
+  /* ── TOKENS ── */
+  :root {
+    --gold:        #c9a84c;
+    --gold-light:  #e0c06a;
+    --gold-dark:   #a07830;
+    --black:       #0a0a0a;
+    --black-soft:  #111111;
+    --dark-bg:     #141414;
+    --card-bg:     #1c1c1c;
+    --white:       #ffffff;
+    --white-90:    rgba(255,255,255,0.90);
+    --white-70:    rgba(255,255,255,0.70);
+    --white-40:    rgba(255,255,255,0.40);
+    --gold-glow:   rgba(201,168,76,0.25);
+
+    --fs-xs:   clamp(0.72rem, 1.5vw, 0.82rem);
+    --fs-sm:   clamp(0.88rem, 2vw,   0.98rem);
+    --fs-base: clamp(0.95rem, 2.2vw, 1.05rem);
+    --fs-lg:   clamp(1.15rem, 2.8vw, 1.35rem);
+    --fs-xl:   clamp(1.4rem,  3.5vw, 1.9rem);
+    --fs-2xl:  clamp(1.9rem,  5vw,   2.8rem);
+    --fs-hero: clamp(2.2rem,  8vw,   5rem);
+
+    --sp-xs:  0.5rem;
+    --sp-sm:  1rem;
+    --sp-md:  1.5rem;
+    --sp-lg:  2rem;
+    --sp-xl:  3rem;
+    --sp-sec: clamp(4rem, 8vw, 7rem);
+
+    --pad: clamp(1rem, 5vw, 2.5rem);
+    --max-w: 1200px;
+    --nav-h: 68px;
+    --radius: 10px;
+    --radius-pill: 50px;
+    --trans: 0.28s ease;
+    --trans-slow: 0.55s cubic-bezier(0.16,1,0.3,1);
+  }
+
+  /* ── RESET ── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { font-size: 16px; scroll-behavior: smooth; overflow-x: hidden; -webkit-text-size-adjust: 100%; }
+  body {
+    font-family: 'Poppins', sans-serif;
+    background: var(--black);
+    color: var(--white-90);
+    line-height: 1.65;
+    overflow-x: hidden;
+  }
+  body.menu-open { overflow: hidden; }
+  img { max-width: 100%; height: auto; display: block; }
+  a { color: inherit; text-decoration: none; }
+  ul { list-style: none; }
+  button { cursor: pointer; border: none; background: none; font-family: inherit; }
+  input, select, textarea, button { font-family: inherit; }
+
+  /* ── CONTAINER ── */
+  .container {
+    width: 100%;
+    max-width: var(--max-w);
+    margin-inline: auto;
+    padding-inline: var(--pad);
+  }
+
+  /* ── HEADINGS ── */
+  h1,h2,h3,h4 { font-family: 'Playfair Display', serif; line-height: 1.15; color: var(--white); }
+
+  .section-title {
+    font-size: var(--fs-2xl);
+    text-align: center;
+    margin-bottom: var(--sp-sm);
+  }
+  .gold-line {
+    width: 56px; height: 3px;
+    background: var(--gold);
+    margin: var(--sp-sm) auto var(--sp-xl);
+    border-radius: 2px;
+  }
+
+  /* ── SECTIONS ── */
+  section { padding-block: var(--sp-sec); }
+  .sec-dark  { background: var(--dark-bg); }
+  .sec-black { background: var(--black); }
+
+  /* ── BUTTONS ── */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.82em 1.9em;
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    border-radius: var(--radius-pill);
+    border: 2px solid transparent;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: transform var(--trans), background var(--trans),
+                border-color var(--trans), box-shadow var(--trans), color var(--trans);
+    text-align: center;
+  }
+  .btn:hover { transform: translateY(-2px); }
+  .btn:active { transform: translateY(0); }
+
+  .btn-primary {
+    background: var(--gold);
+    color: var(--black);
+    border-color: var(--gold);
+  }
+  .btn-primary:hover {
+    background: var(--gold-light);
+    border-color: var(--gold-light);
+    box-shadow: 0 0 22px var(--gold-glow);
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--white);
+    border-color: rgba(255,255,255,0.7);
+  }
+  .btn-outline:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+    background: rgba(201,168,76,0.08);
+  }
+
+  .btn-gold-outline {
+    background: transparent;
+    color: var(--gold);
+    border-color: var(--gold);
+  }
+  .btn-gold-outline:hover {
+    background: var(--gold);
+    color: var(--black);
+    box-shadow: 0 0 22px var(--gold-glow);
+  }
+
+  .btn-full { width: 100%; }
+
+  /* ============================================================
+     LOADER
+  ============================================================ */
+  #loader {
+    position: fixed;
+    inset: 0;
+    background: var(--black);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    font-family: 'Playfair Display', serif;
+    font-size: var(--fs-xl);
+    color: var(--gold);
+    letter-spacing: 0.1em;
+    transition: opacity 0.5s ease;
+  }
+  #loader.hidden { opacity: 0; pointer-events: none; }
+
+  /* ============================================================
+     NAVBAR
+  ============================================================ */
+  .navbar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: var(--nav-h);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    background: transparent;
+    transition: background var(--trans), height var(--trans), box-shadow var(--trans);
+  }
+  .navbar.scrolled {
+    background: rgba(10,10,10,0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 2px 20px rgba(0,0,0,0.6);
+  }
+
+  .nav-inner {
+    width: 100%;
+    max-width: var(--max-w);
+    margin-inline: auto;
+    padding-inline: var(--pad);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sp-sm);
+  }
+
+  /* Logo */
+  .logo {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.1rem, 3vw, 1.4rem);
+    font-weight: 700;
+    color: var(--gold);
+    white-space: nowrap;
+    flex-shrink: 0;
+    z-index: 1001;
+    cursor: pointer;
+  }
+
+  /* Nav links */
+  nav ul {
+    display: flex;
+    align-items: center;
+    gap: clamp(0.8rem, 2vw, 1.8rem);
+  }
+
+  nav ul li a {
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--white-90);
+    padding-block: 4px;
+    position: relative;
+    transition: color var(--trans);
+  }
+  nav ul li a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px; left: 0;
+    width: 0; height: 2px;
+    background: var(--gold);
+    transition: width var(--trans);
+  }
+  nav ul li a:hover,
+  nav ul li a.active { color: var(--gold); }
+  nav ul li a:hover::after,
+  nav ul li a.active::after { width: 100%; }
+
+  /* Hamburger */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 44px; height: 44px;
+    gap: 5px;
+    z-index: 1001;
+    border-radius: 6px;
+    flex-shrink: 0;
+    transition: background var(--trans);
+  }
+  .hamburger:hover { background: rgba(255,255,255,0.08); }
+  .hline {
+    display: block;
+    width: 24px; height: 2px;
+    background: var(--white);
+    border-radius: 2px;
+    transform-origin: center;
+    transition: transform var(--trans), opacity var(--trans), width var(--trans);
+  }
+  .hamburger.is-active .hline:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger.is-active .hline:nth-child(2) { opacity: 0; width: 0; }
+  .hamburger.is-active .hline:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  /* Backdrop */
+  .nav-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.72);
+    z-index: 998;
+    opacity: 0;
+    transition: opacity var(--trans);
+    backdrop-filter: blur(3px);
+  }
+  .nav-backdrop.is-visible { opacity: 1; }
+
+  /* ============================================================
+     BACK TO TOP
+  ============================================================ */
+  #backToTop {
+    position: fixed;
+    bottom: 2rem; right: 1.5rem;
+    z-index: 900;
+    background: var(--gold);
+    color: var(--black);
+    border: none;
+    border-radius: var(--radius-pill);
+    padding: 0.6em 1.1em;
+    font-size: var(--fs-xs);
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    cursor: pointer;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(10px);
+    transition: opacity var(--trans), transform var(--trans), background var(--trans);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+  }
+  #backToTop.visible {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+  #backToTop:hover { background: var(--gold-light); }
+
+  /* ============================================================
+     HERO
+  ============================================================ */
+  .hero {
+    position: relative;
+    width: 100%;
+    height: 100svh;
+    min-height: 500px;
+    max-height: 1080px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Video — fills hero perfectly on ALL screen sizes */
+  .bg-video {
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 100%; height: 100%;
+    min-width: 100%; min-height: 100%;
+    transform: translate(-50%, -50%);
+    object-fit: cover;
+    object-position: center;
+    z-index: 0;
+  }
+
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(0,0,0,0.38) 0%,
+      rgba(0,0,0,0.52) 50%,
+      rgba(0,0,0,0.72) 100%
+    );
+    z-index: 1;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding-inline: var(--pad);
+    width: 100%;
+    max-width: 860px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--sp-md);
+  }
+
+  .hero-content h1 {
+    font-size: var(--fs-hero);
+    color: var(--white);
+    text-shadow: 0 2px 24px rgba(0,0,0,0.55);
+    line-height: 1.05;
+  }
+
+  .hero-content p {
+    font-size: var(--fs-lg);
+    color: var(--white-70);
+    max-width: 500px;
+    line-height: 1.55;
+  }
+
+  /* ── HERO BUTTONS (the main fix) ── */
+  .hero-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-sm);
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 480px;
+    margin-top: var(--sp-xs);
+  }
+
+  /* Both buttons equal width, flex-grow */
+  .hero-buttons .btn {
+    flex: 1 1 180px;
+    max-width: 220px;
+    min-width: 160px;
+  }
+
+  /* Gold button variant used in original */
+  .btn.gold, .btn-gold {
+    background: var(--gold);
+    color: var(--black);
+    border-color: var(--gold);
+  }
+  .btn.gold:hover, .btn-gold:hover {
+    background: var(--gold-light);
+    border-color: var(--gold-light);
+    box-shadow: 0 0 22px var(--gold-glow);
+  }
+
+  /* Scroll indicator */
+  .scroll-indicator {
+    position: absolute;
+    bottom: var(--sp-lg);
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    color: var(--gold);
+    font-size: 1.6rem;
+    animation: bounce 1.5s ease-in-out infinite;
+  }
+  @keyframes bounce {
+    0%,100% { transform: translateX(-50%) translateY(0); }
+    50%      { transform: translateX(-50%) translateY(8px); }
+  }
+
+  /* ============================================================
+     ABOUT
+  ============================================================ */
+  .about {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--sp-xl);
+    align-items: center;
+  }
+
+  .about-text h2 { font-size: var(--fs-2xl); margin-bottom: var(--sp-sm); }
+  .about-text p { color: var(--white-70); line-height: 1.8; margin-bottom: var(--sp-lg); }
+
+  .counters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-lg);
+  }
+
+  .counter-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+  }
+
+  .counter {
+    font-family: 'Playfair Display', serif;
+    font-size: var(--fs-2xl);
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1;
+  }
+
+  .counter-label {
+    font-size: var(--fs-sm);
+    color: var(--white-70);
+    letter-spacing: 0.05em;
+  }
+
+  .about-img {
+    width: 100%;
+    max-width: 440px;
+    margin-inline: auto;
+    aspect-ratio: 4/5;
+    background: var(--card-bg) url('girl.webp') center/cover no-repeat;
+    border-radius: var(--radius);
+    position: relative;
+  }
+  .about-img::before {
+    content: '';
+    position: absolute;
+    top: -10px; left: -10px;
+    width: calc(100% - 20px);
+    height: calc(100% - 20px);
+    border: 2px solid var(--gold);
+    border-radius: var(--radius);
+    pointer-events: none;
+  }
+
+  /* ============================================================
+     SERVICES
+  ============================================================ */
+  .services { text-align: center; }
+  .services h2 { font-size: var(--fs-2xl); margin-bottom: var(--sp-sm); }
+
+  .service-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--sp-md);
+    text-align: left;
+  }
+
+  .service-card {
+    background: var(--card-bg);
+    border: 1px solid rgba(201,168,76,0.12);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: transform var(--trans), border-color var(--trans), box-shadow var(--trans);
+  }
+  .service-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--gold);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+  }
+
+  .service-card img {
+    width: 100%;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+  }
+
+  .service-card-body { padding: var(--sp-md); }
+  .service-card h3 { font-size: var(--fs-lg); color: var(--gold); margin-bottom: var(--sp-xs); }
+  .service-card p  { font-size: var(--fs-sm); color: var(--white-70); line-height: 1.7; }
+
+  /* ============================================================
+     GALLERY
+  ============================================================ */
+  .gallery { text-align: center; }
+  .gallery h2 { font-size: var(--fs-2xl); margin-bottom: var(--sp-sm); }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(260px,100%), 1fr));
+    gap: var(--sp-sm);
+  }
+
+  .gallery-grid img {
+    width: 100%;
+    aspect-ratio: 4/3;
+    object-fit: cover;
+    border-radius: var(--radius);
+    display: block;
+    cursor: zoom-in;
+    transition: transform 0.5s ease, box-shadow 0.4s ease;
+  }
+  .gallery-grid img:hover {
+    transform: scale(1.03);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+  }
+
+  /* ============================================================
+     BOOKING FORM
+  ============================================================ */
+  .booking { text-align: center; }
+  .booking h2 { font-size: var(--fs-2xl); margin-bottom: var(--sp-sm); }
+
+  .booking form,
+  .contact-form form,
+  .comment-box form {
+    width: 100%;
+    max-width: 680px;
+    margin-inline: auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-sm);
+  }
+
+  /* ── FORM ELEMENTS — the core fix ── */
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    width: 100%;
+  }
+
+  .form-group label {
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    color: var(--white-70);
+    text-align: left;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="date"],
+  select,
+  textarea {
+    width: 100%;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 8px;
+    /* font-size ≥ 16px prevents iOS Safari zoom on focus */
+    font-size: max(16px, var(--fs-sm));
+    color: var(--white);
+    padding: 0.78em 1em;
+    transition: border-color var(--trans), box-shadow var(--trans), background var(--trans);
+    -webkit-appearance: none;
+    appearance: none;
+    /* CRITICAL: no overflow */
+    box-sizing: border-box;
+  }
+
+  input[type="text"]:focus,
+  input[type="email"]:focus,
+  input[type="tel"]:focus,
+  input[type="date"]:focus,
+  select:focus,
+  textarea:focus {
+    outline: none;
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(201,168,76,0.2);
+    background: rgba(255,255,255,0.07);
+  }
+
+  input::placeholder, textarea::placeholder { color: var(--white-40); }
+
+  select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23c9a84c' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1em center;
+    background-size: 16px;
+    padding-right: 2.5em;
+    cursor: pointer;
+  }
+
+  select option {
+    background: var(--black-soft);
+    color: var(--white);
+  }
+
+  textarea {
+    resize: vertical;
+    min-height: 120px;
+  }
+
+  /* Booking form — wrap inputs into pairs on wider screens */
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--sp-sm);
+    width: 100%;
+  }
+
+  /* Booking submit aligned */
+  #bookingForm button,
+  #contactForm button,
+  #commentForm button {
+    align-self: stretch;
+    width: 100%;
+    padding: 0.9em 2em;
+  }
+
+  /* ============================================================
+     TESTIMONIALS
+  ============================================================ */
+  .testimonials { text-align: center; }
+  .testimonials h2 { font-size: var(--fs-2xl); margin-bottom: var(--sp-sm); }
+
+  .testimonial-slider {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--sp-md);
+    margin-top: var(--sp-xl);
+  }
+
+  .testimonial {
+    background: var(--card-bg);
+    border-left: 3px solid var(--gold);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    padding: var(--sp-lg);
+    font-size: var(--fs-base);
+    color: var(--white-70);
+    font-style: italic;
+    line-height: 1.8;
+    text-align: left;
+    transition: box-shadow var(--trans);
+  }
+  .testimonial:hover {
+    box-shadow: 0 4px 24px rgba(0,0,0,0.4);
+  }
+
+  /* ============================================================
+     COMMENTS
+  ============================================================ */
+  .comments { text-align: center; }
+  .comments h2 { font-size: var(--fs-2xl); margin-bottom: var(--sp-xs); }
+
+  .comment-intro {
+    font-size: var(--fs-sm);
+    color: var(--white-70);
+    margin-bottom: var(--sp-xl);
+  }
+
+  .comment-box {
+    background: var(--card-bg);
+    border: 1px solid rgba(201,168,76,0.15);
+    border-radius: var(--radius);
+    padding: clamp(1.2rem,4vw,2rem);
+    max-width: 640px;
+    margin-inline: auto;
+    margin-bottom: var(--sp-xl);
+  }
+
+  .comment-list { max-width: 640px; margin-inline: auto; }
+
+  .comment-entry {
+    background: var(--card-bg);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: var(--radius);
+    padding: var(--sp-md);
+    margin-bottom: var(--sp-sm);
+    text-align: left;
+  }
+  .comment-entry strong { color: var(--gold); font-size: var(--fs-sm); }
+  .comment-entry p { font-size: var(--fs-sm); color: var(--white-70); margin-top: 4px; line-height: 1.7; }
+
+  /* ============================================================
+     CONTACT
+  ============================================================ */
+  .contact { text-align: center; }
+  .contact h2 { font-size: var(--fs-2xl); margin-bottom: var(--sp-xs); }
+  .contact-intro { font-size: var(--fs-sm); color: var(--white-70); margin-bottom: var(--sp-xl); }
+
+  .contact-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--sp-xl);
+    text-align: left;
+    margin-bottom: var(--sp-xl);
+  }
+
+  .contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-md);
+  }
+
+  .info-card {
+    background: var(--card-bg);
+    border: 1px solid rgba(201,168,76,0.15);
+    border-radius: var(--radius);
+    padding: var(--sp-md);
+    transition: border-color var(--trans), box-shadow var(--trans);
+  }
+  .info-card:hover {
+    border-color: var(--gold);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+  }
+  .info-card h3 { font-size: var(--fs-base); color: var(--gold); margin-bottom: 4px; }
+  .info-card p, .info-card a {
+    font-size: var(--fs-sm);
+    color: var(--white-70);
+    word-break: break-word;
+  }
+  .info-card a:hover { color: var(--gold); }
+
+  .contact-form {
+    background: var(--card-bg);
+    border: 1px solid rgba(201,168,76,0.15);
+    border-radius: var(--radius);
+    padding: clamp(1.2rem,4vw,2rem);
+  }
+
+  .contact-form form {
+    max-width: 100%;
+    margin-inline: 0;
+  }
+
+  .map {
+    background: var(--card-bg);
+    border: 1px solid rgba(201,168,76,0.15);
+    border-radius: var(--radius);
+    padding: var(--sp-xl);
+    text-align: center;
+    color: var(--white-40);
+    font-size: var(--fs-sm);
+  }
+
+  /* ============================================================
+     LIGHTBOX
+  ============================================================ */
+  .lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    background: rgba(0,0,0,0.95);
+    align-items: center;
+    justify-content: center;
+    padding: var(--sp-lg);
+  }
+  .lightbox.open { display: flex; }
+
+  .lightbox img {
+    max-width: 100%;
+    max-height: 90svh;
+    object-fit: contain;
+    border-radius: var(--radius);
+  }
+
+  .lb-close {
+    position: absolute;
+    top: var(--sp-sm); right: var(--sp-sm);
+    width: 44px; height: 44px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem;
+    color: var(--white);
+    cursor: pointer;
+    transition: background var(--trans);
+    border: none;
+  }
+  .lb-close:hover { background: var(--gold); color: var(--black); }
+
+  /* ============================================================
+     FOOTER (simple)
+  ============================================================ */
+  .footer {
+    background: var(--black);
+    border-top: 1px solid rgba(201,168,76,0.18);
+    padding-block: var(--sp-xl);
+    text-align: center;
+  }
+  .footer-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: var(--fs-xl);
+    color: var(--gold);
+    margin-bottom: var(--sp-sm);
+  }
+  .footer p {
+    font-size: var(--fs-sm);
+    color: var(--white-40);
+    margin-bottom: var(--sp-xs);
+  }
+  .footer a { color: var(--gold); }
+
+  /* ============================================================
+     SCROLL REVEAL
+  ============================================================ */
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.55s ease, transform 0.55s ease;
+  }
+  [data-reveal].revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ============================================================
+     RESPONSIVE — 576px (large phones landscape)
+  ============================================================ */
+  @media (min-width: 576px) {
+    .service-grid { grid-template-columns: repeat(2, 1fr); }
+    .testimonial-slider { grid-template-columns: repeat(2, 1fr); }
+    .form-row { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  /* ============================================================
+     RESPONSIVE — 768px (tablets, desktop nav)
+  ============================================================ */
+  @media (min-width: 768px) {
+    .hamburger    { display: none !important; }
+    .nav-backdrop { display: none !important; }
+
+    nav ul {
+      display: flex; /* always visible */
+      position: static;
+      transform: none;
+      width: auto;
+      height: auto;
+      background: none;
+      border: none;
+      flex-direction: row;
+      padding: 0;
+      overflow: visible;
+    }
+
+    .about {
+      grid-template-columns: 1fr 1fr;
+    }
+    .about-img { max-width: 100%; margin-inline: 0; }
+
+    .service-grid { grid-template-columns: repeat(3, 1fr); }
+
+    .gallery-grid { grid-template-columns: repeat(3, 1fr); }
+
+    .contact-container { grid-template-columns: 1fr 1.4fr; }
+
+    .testimonial-slider { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  /* ============================================================
+     RESPONSIVE — 992px (laptops)
+  ============================================================ */
+  @media (min-width: 992px) {
+    .service-grid { grid-template-columns: repeat(4, 1fr); }
+    .gallery-grid { grid-template-columns: repeat(4, 1fr); }
+  }
+
+  /* ============================================================
+     MOBILE OVERRIDES — max 767px (hamburger menu)
+  ============================================================ */
+  @media (max-width: 767px) {
+    .hamburger { display: flex; }
+
+    .nav-backdrop { display: block; pointer-events: none; }
+    .nav-backdrop.is-visible { pointer-events: auto; }
+
+    /* Slide-in mobile menu */
+    nav ul {
+      position: fixed;
+      top: 0; right: 0;
+      width: min(300px, 82vw);
+      height: 100svh;
+      background: var(--black-soft);
+      border-left: 1px solid rgba(201,168,76,0.2);
+      flex-direction: column;
+      align-items: stretch;
+      justify-content: flex-start;
+      gap: 0;
+      padding-top: calc(var(--nav-h) + 1rem);
+      padding-inline: var(--sp-lg);
+      z-index: 999;
+      transform: translateX(100%);
+      transition: transform var(--trans-slow);
+      overflow-y: auto;
+      overscroll-behavior: contain;
+    }
+
+    nav ul.is-open { transform: translateX(0); }
+
+    nav ul li a {
+      display: block;
+      font-size: var(--fs-base);
+      padding: var(--sp-sm) 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      letter-spacing: 0.06em;
+    }
+    nav ul li a::after { display: none; }
+    nav ul li a:hover {
+      padding-left: 6px;
+      transition: padding var(--trans);
+    }
+
+    /* Stack hero buttons vertically on small screens */
+    .hero-buttons {
+      flex-direction: column;
+      align-items: stretch;
+      max-width: 280px;
+    }
+    .hero-buttons .btn {
+      width: 100%;
+      max-width: 100%;
+      flex: none;
+    }
+
+    /* Service grid: 2 cols on medium phones */
+    .service-grid { grid-template-columns: repeat(2, 1fr); }
+
+    /* Gallery: 2 cols */
+    .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  /* Extra small phones */
+  @media (max-width: 375px) {
+    :root { --pad: 1rem; }
+    .service-grid { grid-template-columns: 1fr; }
+    .gallery-grid { grid-template-columns: 1fr; }
+    .hero-content h1 { font-size: clamp(1.8rem, 10vw, 2.4rem); }
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+    html { scroll-behavior: auto; }
+  }
+  </style>
 </head>
 <body>
-    <!-- Loader -->
-  <div id="loader">Loading...</div>
-    <div class="spinner"></div>
-  </div>
-<header class="navbar">
-  <div class="logo">MC Samm Studios</div>
-  <nav>
-    <ul>
-      <li><a href="#about">About</a></li>
-      <li><a href="#services">Services</a></li>
-      <li><a href="#gallery">Gallery</a></li>
-      <li><a href="#booking">Booking</a></li>
-      <li><a href="#testimonials">Testimonials</a></li>
-      <li><a href="#comments">Comments</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-  </nav>
-</header>
 
-<!-- Main Content -->
-  
+  <!-- Loader -->
+  <div id="loader">MC Samm Studios</div>
 
-  <!-- Back to Top Button -->
-  <button id="backToTop">Back to Top</button>
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="nav-inner">
+      <div class="logo" onclick="window.scrollTo({top:0,behavior:'smooth'})">MC Samm Studios</div>
 
-  <!-- Hero Section -->
+      <nav>
+        <ul id="navMenu">
+          <li><a href="#about">About</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#gallery">Gallery</a></li>
+          <li><a href="#booking">Booking</a></li>
+          <li><a href="#testimonials">Testimonials</a></li>
+          <li><a href="#comments">Comments</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+
+      <!-- Hamburger (mobile only) -->
+      <button class="hamburger" id="hamburger"
+              aria-label="Toggle navigation" aria-expanded="false" aria-controls="navMenu">
+        <span class="hline"></span>
+        <span class="hline"></span>
+        <span class="hline"></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile nav backdrop -->
+  <div class="nav-backdrop" id="navBackdrop" aria-hidden="true"></div>
+
+  <!-- Back to Top -->
+  <button id="backToTop">↑ Top</button>
+
+  <!-- ── HERO ── -->
   <section class="hero">
-    <video autoplay muted loop class="bg-video">
+    <!--
+      VIDEO NOTES:
+      • playsinline = required for iOS autoplay (no fullscreen takeover)
+      • muted       = required for autoplay on all browsers
+      • poster      = fallback image shown before video loads / if autoplay blocked
+      Replace src with your actual video file path.
+    -->
+    <video class="bg-video" autoplay muted loop playsinline preload="metadata"
+           poster="images/hero-poster.jpg">
       <source src="https://www.w3schools.com/howto/rain.mp4" type="video/mp4">
     </video>
     <div class="hero-overlay"></div>
+
     <div class="hero-content">
       <h1>MC Samm Studios</h1>
       <p>Capturing Moments. Creating Timeless Memories.</p>
+      <!--
+        BUTTONS FIX: flex container, no absolute positioning.
+        Stacks vertically on mobile, side-by-side on tablet+.
+      -->
       <div class="hero-buttons">
-        <a href="#booking" class="btn">Book a Session</a>
-        <a href="#gallery" class="btn gold">View Gallery</a>
+        <a href="#booking" class="btn btn-primary">Book a Session</a>
+        <a href="#gallery" class="btn btn-outline">View Gallery</a>
       </div>
     </div>
-    <div class="scroll-indicator">↓</div>
+
+    <div class="scroll-indicator" aria-hidden="true">↓</div>
   </section>
 
-  <!-- About Section -->
-  <section id="about" class="about">
-    <div class="about-text">
+  <!-- ── ABOUT ── -->
+  <section id="about" class="about container sec-dark" style="padding-block: var(--sp-sec);">
+    <div class="about-text" data-reveal>
       <h2>About Us</h2>
+      <div class="gold-line" style="margin-inline:0;"></div>
       <p>MC Samm Studios is a premium creative brand specializing in capturing unforgettable moments through photography and videography. Our mission is to transform fleeting moments into timeless memories with cinematic artistry.</p>
+
       <div class="counters">
-        <div class="counter" data-target="500">All</div><span>Happy Clients</span>
-        <div class="counter" data-target="1200">35</div><span>Projects Completed</span>
-        <div class="counter" data-target="10">10</div><span>Years Experience</span>
-      </div>
-    </div>
-    <div class="about-img"></div>
-  </section>
-
-  <section id="services" class="services">
-  <h2>Our Services</h2>
-  <div class="service-grid">
-    <div class="service-card">
-      <img src="video.jpg" alt="Video coverage">
-      <h3>Video Coverage</h3>
-      <p>Professional cinematic video coverage for weddings, events, and productions.</p>
-    </div>
-    <div class="service-card">
-      <img src="girl.webp" alt="Photography">
-      <h3>Photography</h3>
-      <p>Luxury photography capturing timeless memories with artistic precision.</p>
-    </div>
-    <div class="service-card">
-      <img src="photoshoot.jpg" alt="Photoshoots">
-      <h3>Photoshoots</h3>
-      <p>Creative studio and outdoor photoshoots tailored to your style.</p>
-    </div>
-    <div class="service-card">
-      <img src="premium-photo-editing.avif" alt="Photo Editing">
-      <h3>Photo Editing</h3>
-      <p>High-end retouching and editing for flawless, professional results.</p>
-    </div>
-    <div class="service-card">
-      <img src="edit-video.jpg" alt="Video Editing">
-      <h3>Video Editing</h3>
-      <p>Seamless editing with cinematic transitions and storytelling.</p>
-    </div>
-    <div class="service-card">
-      <img src="mc.jpg" alt="MC Services">
-      <h3>MC Services</h3>
-      <p>Engaging master of ceremonies to elevate your event experience.</p>
-    </div>
-    <div class="service-card">
-      <img src="makeup.jpg" alt="Makeup Services">
-      
-      <p>Professional makeup artistry for weddings, shoots, and events.</p>
-    </div>
-  </div>
-</section>
-
-  <!-- Gallery Section -->
-  <section id="gallery" class="gallery">
-    <h2>Portfolio</h2>
-    <div class="gallery-grid">
-      <img src="https://picsum.photos/400/300?random=1" alt="">
-      <img src="https://picsum.photos/400/300?random=2" alt="">
-      <img src="https://picsum.photos/400/300?random=3" alt="">
-      <img src="https://picsum.photos/400/300?random=4" alt="">
-      <img src="https://picsum.photos/400/300?random=5" alt="">
-    </div>
-  </section>
-
-  <!-- Booking Section -->
-  <section id="booking" class="booking">
-    <h2>Book a Session</h2>
-    <form id="bookingForm">
-      <input type="text" name="name" placeholder="Full Name" required>
-      <input type="text" name="phone" placeholder="Phone Number" required>
-      <input type="email" name="email" placeholder="Email" required>
-      <select name="service" required>
-        <option value="">Select Service</option>
-        <option>Video Coverage</option>
-        <option>Photography</option>
-        <option>Photoshoots</option>
-        <option>Photo Editing</option>
-        <option>Video Editing</option>
-        <option>MC Services</option>
-        <option>Makeup Services</option>
-      </select>
-      <input type="date" name="date" required>
-      <textarea name="message" placeholder="Message"></textarea>
-      <button type="submit" class="btn gold">Submit</button>
-    </form>
-  </section>
-
-  <!-- Testimonials -->
-  <section id="testimonials" class="testimonials">
-    <h2>Testimonials</h2>
-    <div class="testimonial-slider">
-      <div class="testimonial">⭐️⭐️⭐️⭐️⭐️ "Amazing work!" - Jane</div>
-      <div class="testimonial">⭐️⭐️⭐️⭐️⭐️ "Captured our wedding perfectly." - David</div>
-      <div class="testimonial">⭐️⭐️⭐️⭐️⭐️ "Professional and creative." - Sarah</div>
-    </div>
-  </section>
-
-  <section id="comments" class="comments">
-  <h2>Leave a Comment</h2>
-  <p class="comment-intro">We value your thoughts — share your experience with MC Samm Studios.</p>
-  
-  <div class="comment-box">
-    <form id="commentForm">
-      <div class="form-group">
-        <label for="name">Your Name</label>
-        <input type="text" id="name" name="name" placeholder="Enter your name" required>
-      </div>
-      <div class="form-group">
-        <label for="comment">Your Comment</label>
-        <textarea id="comment" name="comment" placeholder="Write your comment..." required></textarea>
-      </div>
-      <button type="submit" class="btn gold">Submit Comment</button>
-    </form>
-  </div>
-
-  <div id="commentList" class="comment-list">
-    <!-- Dynamic comments will appear here -->
-  </div>
-</section>
-
-  <section id="contact" class="contact">
-  <h2>Contact Us</h2>
-  <p class="contact-intro">We’d love to hear from you. Reach out for bookings, collaborations, or inquiries.</p>
-
-  <div class="contact-container">
-    <!-- Contact Info Cards -->
-    <div class="contact-info">
-      <div class="info-card">
-        <h3>📞 Phone</h3>
-        <p>09027694575</p>
-      </div>
-      <div class="info-card">
-        <h3>📧 Email</h3>
-        <p><a href="mailto:successakogun5@gmail.com">successakogun5@gmail.com</a></p>
-      </div>
-      <div class="info-card">
-        <h3>📍 Address</h3>
-        <p>Opposite Adeyi Primary School, Kodape Auta</p>
-      </div>
-    </div>
-
-    <!-- Contact Form -->
-    <div class="contact-form">
-      <form id="contactForm">
-        <div class="form-group">
-          <label for="cname">Full Name</label>
-          <input type="text" id="cname" name="cname" placeholder="Enter your name" required>
+        <div class="counter-item">
+          <span class="counter" data-target="500">0</span>
+          <span class="counter-label">Happy Clients</span>
         </div>
-        <div class="form-group">
-          <label for="cemail">Email</label>
-          <input type="email" id="cemail" name="cemail" placeholder="Enter your email" required>
+        <div class="counter-item">
+          <span class="counter" data-target="1200">0</span>
+          <span class="counter-label">Projects Completed</span>
         </div>
-        <div class="form-group">
-          <label for="cmessage">Message</label>
-          <textarea id="cmessage" name="cmessage" placeholder="Write your message..." required></textarea>
+        <div class="counter-item">
+          <span class="counter" data-target="10">0</span>
+          <span class="counter-label">Years Experience</span>
         </div>
-        <button type="submit" class="btn gold">Send Message</button>
+      </div>
+    </div>
+
+    <div class="about-img" data-reveal></div>
+  </section>
+
+  <!-- ── SERVICES ── -->
+  <section id="services" class="services sec-black" style="padding-block: var(--sp-sec);">
+    <div class="container">
+      <h2 class="section-title" data-reveal>Our Services</h2>
+      <div class="gold-line"></div>
+
+      <div class="service-grid">
+
+        <div class="service-card" data-reveal>
+          <img src="video.jpg" alt="Video coverage" loading="lazy">
+          <div class="service-card-body">
+            <h3>Video Coverage</h3>
+            <p>Professional cinematic video coverage for weddings, events, and productions.</p>
+          </div>
+        </div>
+
+        <div class="service-card" data-reveal>
+          <img src="girl.webp" alt="Photography" loading="lazy">
+          <div class="service-card-body">
+            <h3>Photography</h3>
+            <p>Luxury photography capturing timeless memories with artistic precision.</p>
+          </div>
+        </div>
+
+        <div class="service-card" data-reveal>
+          <img src="photoshoot.jpg" alt="Photoshoots" loading="lazy">
+          <div class="service-card-body">
+            <h3>Photoshoots</h3>
+            <p>Creative studio and outdoor photoshoots tailored to your style.</p>
+          </div>
+        </div>
+
+        <div class="service-card" data-reveal>
+          <img src="premium-photo-editing.avif" alt="Photo Editing" loading="lazy">
+          <div class="service-card-body">
+            <h3>Photo Editing</h3>
+            <p>High-end retouching and editing for flawless, professional results.</p>
+          </div>
+        </div>
+
+        <div class="service-card" data-reveal>
+          <img src="edit-video.jpg" alt="Video Editing" loading="lazy">
+          <div class="service-card-body">
+            <h3>Video Editing</h3>
+            <p>Seamless editing with cinematic transitions and storytelling.</p>
+          </div>
+        </div>
+
+        <div class="service-card" data-reveal>
+          <img src="mc.jpg" alt="MC Services" loading="lazy">
+          <div class="service-card-body">
+            <h3>MC Services</h3>
+            <p>Engaging master of ceremonies to elevate your event experience.</p>
+          </div>
+        </div>
+
+        <div class="service-card" data-reveal>
+          <img src="makeup.jpg" alt="Makeup Services" loading="lazy">
+          <div class="service-card-body">
+            <h3>Makeup Services</h3>
+            <p>Professional makeup artistry for weddings, shoots, and events.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── GALLERY ── -->
+  <section id="gallery" class="gallery sec-dark" style="padding-block: var(--sp-sec);">
+    <div class="container">
+      <h2 class="section-title" data-reveal>Portfolio</h2>
+      <div class="gold-line"></div>
+
+      <div class="gallery-grid">
+        <img src="https://picsum.photos/400/300?random=1" alt="Portfolio image 1" loading="lazy">
+        <img src="https://picsum.photos/400/300?random=2" alt="Portfolio image 2" loading="lazy">
+        <img src="https://picsum.photos/400/300?random=3" alt="Portfolio image 3" loading="lazy">
+        <img src="https://picsum.photos/400/300?random=4" alt="Portfolio image 4" loading="lazy">
+        <img src="https://picsum.photos/400/300?random=5" alt="Portfolio image 5" loading="lazy">
+      </div>
+    </div>
+  </section>
+
+  <!-- ── BOOKING ── -->
+  <section id="booking" class="booking sec-black" style="padding-block: var(--sp-sec);">
+    <div class="container">
+      <h2 class="section-title" data-reveal>Book a Session</h2>
+      <div class="gold-line"></div>
+
+      <form id="bookingForm" novalidate>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="b-name">Full Name *</label>
+            <input type="text" id="b-name" name="name" placeholder="Full Name" required autocomplete="name">
+          </div>
+          <div class="form-group">
+            <label for="b-phone">Phone Number *</label>
+            <input type="tel" id="b-phone" name="phone" placeholder="Phone Number" required autocomplete="tel">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="b-email">Email *</label>
+            <input type="email" id="b-email" name="email" placeholder="Email" required autocomplete="email">
+          </div>
+          <div class="form-group">
+            <label for="b-date">Preferred Date *</label>
+            <input type="date" id="b-date" name="date" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="b-service">Select Service *</label>
+          <select id="b-service" name="service" required>
+            <option value="" disabled selected>Select Service</option>
+            <option>Video Coverage</option>
+            <option>Photography</option>
+            <option>Photoshoots</option>
+            <option>Photo Editing</option>
+            <option>Video Editing</option>
+            <option>MC Services</option>
+            <option>Makeup Services</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="b-message">Message</label>
+          <textarea id="b-message" name="message" placeholder="Tell us about your event…"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-full">Submit Booking</button>
       </form>
     </div>
+  </section>
+
+  <!-- ── TESTIMONIALS ── -->
+  <section id="testimonials" class="testimonials sec-dark" style="padding-block: var(--sp-sec);">
+    <div class="container">
+      <h2 class="section-title" data-reveal>Testimonials</h2>
+      <div class="gold-line"></div>
+
+      <div class="testimonial-slider">
+        <div class="testimonial" data-reveal>⭐️⭐️⭐️⭐️⭐️ "Amazing work!" — Jane</div>
+        <div class="testimonial" data-reveal>"Captured our wedding perfectly." — David</div>
+        <div class="testimonial" data-reveal>⭐️⭐️⭐️⭐️⭐️ "Professional and creative." — Sarah</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── COMMENTS ── -->
+  <section id="comments" class="comments sec-black" style="padding-block: var(--sp-sec);">
+    <div class="container">
+      <h2 class="section-title" data-reveal>Leave a Comment</h2>
+      <div class="gold-line"></div>
+      <p class="comment-intro">We value your thoughts — share your experience with MC Samm Studios.</p>
+
+      <div class="comment-box" data-reveal>
+        <form id="commentForm" novalidate>
+          <div class="form-group">
+            <label for="c-name">Your Name</label>
+            <input type="text" id="c-name" name="name" placeholder="Enter your name" required>
+          </div>
+          <div class="form-group">
+            <label for="c-comment">Your Comment</label>
+            <textarea id="c-comment" name="comment" placeholder="Write your comment…" required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary btn-full">Submit Comment</button>
+        </form>
+      </div>
+
+      <div id="commentList" class="comment-list"></div>
+    </div>
+  </section>
+
+  <!-- ── CONTACT ── -->
+  <section id="contact" class="contact sec-dark" style="padding-block: var(--sp-sec);">
+    <div class="container">
+      <h2 class="section-title" data-reveal>Contact Us</h2>
+      <div class="gold-line"></div>
+      <p class="contact-intro">We'd love to hear from you. Reach out for bookings, collaborations, or inquiries.</p>
+
+      <div class="contact-container">
+        <!-- Contact info cards -->
+        <div class="contact-info" data-reveal>
+          <div class="info-card">
+            <h3>📞 Phone</h3>
+            <p><a href="tel:09027694575">09027694575</a></p>
+          </div>
+          <div class="info-card">
+            <h3>📧 Email</h3>
+            <p><a href="mailto:successakogun5@gmail.com">successakogun5@gmail.com</a></p>
+          </div>
+          <div class="info-card">
+            <h3>📍 Address</h3>
+            <p>Opposite Adeyi Primary School, Kodape Auta</p>
+          </div>
+        </div>
+
+        <!-- Contact form -->
+        <div class="contact-form" data-reveal>
+          <form id="contactForm" novalidate>
+            <div class="form-group">
+              <label for="ct-name">Full Name</label>
+              <input type="text" id="ct-name" name="cname" placeholder="Enter your name" required autocomplete="name">
+            </div>
+            <div class="form-group">
+              <label for="ct-email">Email</label>
+              <input type="email" id="ct-email" name="cemail" placeholder="Enter your email" required autocomplete="email">
+            </div>
+            <div class="form-group">
+              <label for="ct-message">Message</label>
+              <textarea id="ct-message" name="cmessage" placeholder="Write your message…" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary btn-full">Send Message</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="map">[Google Map — Opposite Adeyi Primary School, Kodape Auta]</div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer class="footer">
+    <div class="footer-logo">MC Samm Studios</div>
+    <p>Capturing Moments. Creating Timeless Memories.</p>
+    <p style="margin-top:0.5rem;">
+      <a href="tel:09027694575">09027694575</a> &nbsp;·&nbsp;
+      <a href="mailto:successakogun5@gmail.com">successakogun5@gmail.com</a>
+    </p>
+    <p style="margin-top:1rem;">&copy; <span id="yr"></span> MC Samm Studios. All rights reserved.</p>
+  </footer>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
+    <button class="lb-close" id="lbClose" aria-label="Close">&times;</button>
+    <img src="" alt="" id="lbImg">
   </div>
 
-  <!-- Map Placeholder -->
-  <div class="map">[Google Map Placeholder]</div>
-</section>
+  <script>
+  /* ============================================================
+     MC SAMM STUDIOS — script.js (inline, self-contained)
+     All JS your original script.js would have done, plus fixes.
+  ============================================================ */
 
-<script src="script.js"></script>
+  // ── LOADER ──
+  window.addEventListener('load', () => {
+    const loader = document.getElementById('loader');
+    setTimeout(() => loader.classList.add('hidden'), 700);
+  });
+
+  // ── FOOTER YEAR ──
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  // ── NAVBAR SCROLL ──
+  const navbar = document.querySelector('.navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 60);
+    document.getElementById('backToTop').classList.toggle('visible', window.scrollY > 400);
+  }, { passive: true });
+
+  // ── BACK TO TOP ──
+  document.getElementById('backToTop').addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  // ── HAMBURGER MENU ──
+  const hamburger = document.getElementById('hamburger');
+  const navMenu   = document.getElementById('navMenu');
+  const backdrop  = document.getElementById('navBackdrop');
+
+  function openMenu() {
+    hamburger.classList.add('is-active');
+    hamburger.setAttribute('aria-expanded', 'true');
+    navMenu.classList.add('is-open');
+    backdrop.classList.add('is-visible');
+    document.body.classList.add('menu-open');
+  }
+  function closeMenu() {
+    hamburger.classList.remove('is-active');
+    hamburger.setAttribute('aria-expanded', 'false');
+    navMenu.classList.remove('is-open');
+    backdrop.classList.remove('is-visible');
+    document.body.classList.remove('menu-open');
+  }
+
+  hamburger.addEventListener('click', () =>
+    navMenu.classList.contains('is-open') ? closeMenu() : openMenu()
+  );
+  backdrop.addEventListener('click', closeMenu);
+  navMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMenu(); });
+
+  // ── SMOOTH SCROLL ──
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', function(e) {
+      const target = document.querySelector(this.getAttribute('href'));
+      if (!target) return;
+      e.preventDefault();
+      const top = target.getBoundingClientRect().top + window.scrollY - navbar.offsetHeight;
+      window.scrollTo({ top, behavior: 'smooth' });
+    });
+  });
+
+  // ── ACTIVE NAV LINK ──
+  const sections  = document.querySelectorAll('section[id]');
+  const navLinks  = document.querySelectorAll('.navbar nav a');
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const id = e.target.id;
+        navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === `#${id}`));
+      }
+    });
+  }, { rootMargin: `-${navbar.offsetHeight + 20}px 0px -60% 0px` });
+  sections.forEach(s => io.observe(s));
+
+  // ── SCROLL REVEAL ──
+  const revealIO = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('revealed');
+        revealIO.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('[data-reveal]').forEach(el => revealIO.observe(el));
+
+  // ── ANIMATED COUNTERS ──
+  function animateCounter(el) {
+    const target = parseInt(el.dataset.target, 10);
+    const dur = 1800;
+    const start = performance.now();
+    function step(now) {
+      const p = Math.min((now - start) / dur, 1);
+      el.textContent = Math.floor(p * target);
+      if (p < 1) requestAnimationFrame(step);
+      else el.textContent = target;
+    }
+    requestAnimationFrame(step);
+  }
+  const counterIO = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        animateCounter(e.target);
+        counterIO.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.5 });
+  document.querySelectorAll('.counter[data-target]').forEach(el => counterIO.observe(el));
+
+  // ── LIGHTBOX ──
+  const lightbox = document.getElementById('lightbox');
+  const lbImg    = document.getElementById('lbImg');
+  const lbClose  = document.getElementById('lbClose');
+
+  document.querySelectorAll('.gallery-grid img').forEach(img => {
+    img.addEventListener('click', () => {
+      lbImg.src = img.src;
+      lbImg.alt = img.alt;
+      lightbox.classList.add('open');
+      document.body.classList.add('menu-open');
+    });
+  });
+  function closeLB() {
+    lightbox.classList.remove('open');
+    document.body.classList.remove('menu-open');
+    lbImg.src = '';
+  }
+  lbClose.addEventListener('click', closeLB);
+  lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLB(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLB(); });
+
+  // ── FORM VALIDATION (booking, contact, comment) ──
+  function validateForm(form) {
+    let ok = true;
+    form.querySelectorAll('.form-error').forEach(e => e.remove());
+    form.querySelectorAll('[required]').forEach(field => {
+      if (!field.value.trim()) {
+        ok = false;
+        field.style.borderColor = '#e05c5c';
+        const err = document.createElement('span');
+        err.className = 'form-error';
+        err.textContent = 'This field is required.';
+        err.style.cssText = 'display:block;font-size:0.78rem;color:#e05c5c;margin-top:4px;';
+        field.closest('.form-group').appendChild(err);
+      } else {
+        field.style.borderColor = '';
+      }
+    });
+    const email = form.querySelector('[type="email"]');
+    if (email && email.value.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) {
+      ok = false;
+      email.style.borderColor = '#e05c5c';
+      const err = document.createElement('span');
+      err.className = 'form-error';
+      err.textContent = 'Please enter a valid email.';
+      err.style.cssText = 'display:block;font-size:0.78rem;color:#e05c5c;margin-top:4px;';
+      email.closest('.form-group').appendChild(err);
+    }
+    return ok;
+  }
+
+  function successState(btn, original) {
+    btn.textContent = 'Sent ✓';
+    btn.disabled = true;
+    btn.style.cssText = 'background:#2d7a4f;border-color:#2d7a4f;';
+    setTimeout(() => {
+      btn.textContent = original;
+      btn.disabled = false;
+      btn.style.cssText = '';
+    }, 4000);
+  }
+
+  // Booking form
+  document.getElementById('bookingForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    if (validateForm(this)) {
+      successState(this.querySelector('[type="submit"]'), 'Submit Booking');
+      this.reset();
+    }
+  });
+
+  // Contact form
+  document.getElementById('contactForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    if (validateForm(this)) {
+      successState(this.querySelector('[type="submit"]'), 'Send Message');
+      this.reset();
+    }
+  });
+
+  // Comment form
+  document.getElementById('commentForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    if (!validateForm(this)) return;
+    const name    = this.querySelector('#c-name').value.trim();
+    const comment = this.querySelector('#c-comment').value.trim();
+    const list    = document.getElementById('commentList');
+    const entry   = document.createElement('div');
+    entry.className = 'comment-entry';
+    entry.innerHTML = `<strong>${name}</strong><p>${comment}</p>`;
+    list.prepend(entry);
+    this.reset();
+  });
+
+  // ── VIDEO FALLBACK (if autoplay blocked) ──
+  const vid = document.querySelector('.bg-video');
+  if (vid) {
+    vid.play().catch(() => {
+      vid.style.display = 'none';
+      const wrap = vid.closest('.hero');
+      if (wrap) {
+        wrap.style.background = 'linear-gradient(135deg, #0a0a0a 0%, #1a1208 100%)';
+      }
+    });
+  }
+  </script>
 </body>
 </html>
